@@ -29,6 +29,8 @@
   --ok:#5cc58c; --ok-soft:#183325; --warn:#f0b04a; --warn-soft:#382912; --err:#ff8a80;
   color-scheme:dark}}
 *{box-sizing:border-box}
+html{scroll-padding-top:72px}
+button,.btn,.chip,summary,label{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ff-body);font-size:16px;line-height:1.55;padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%}
@@ -90,9 +92,11 @@ h2{font-size:19px;margin:0;font-weight:700}
 .muted{color:var(--muted)}
 .note{margin:0;font-size:14px;color:var(--muted)}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 16px}
-label.f{display:grid;gap:4px;font-size:14px;font-weight:600;min-width:0}
+label.f{display:block;font-size:14px;font-weight:600;min-width:0}
+label.f>input,label.f>select,label.f>textarea{display:block;margin-top:5px}
 label.f em{font-style:normal;color:var(--err)}
 label.f .hint{font-weight:400;color:var(--muted);font-size:13px}
+input,select,textarea{font-size:16px!important;min-height:44px}
 input[type=text],input[type=tel],input[type=number],select,textarea{width:100%;font:inherit;font-weight:400;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
 .ac{position:relative}
 .ac-list{position:absolute;left:0;right:0;top:100%;background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgb(0 0 0 / .15);max-height:300px;overflow:auto;z-index:4;list-style:none;padding:4px;margin:4px 0 0}
@@ -116,6 +120,14 @@ input[type=text],input[type=tel],input[type=number],select,textarea{width:100%;f
 .choice label span{font-size:13px;color:var(--muted)}
 .choice label:has(input:checked){border-color:var(--maroon);background:var(--gold-soft)}
 .group-h{font-size:13px;letter-spacing:.06em;color:var(--muted);font-weight:700;margin:6px 0 -4px}
+.pgroup{border:1px solid var(--line);border-radius:var(--r);background:var(--bg);margin-bottom:10px;overflow:hidden}
+.pgroup>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;font-weight:700;font-size:16px;min-height:48px}
+.pgroup>summary::-webkit-details-marker{display:none}
+.pgroup>summary::after{content:"▾";font-size:18px;color:var(--muted);transition:transform .2s}
+.pgroup[open]>summary::after{transform:rotate(180deg)}
+.pgroup>summary .cnt{margin-left:auto;font-size:12px;font-weight:700;background:var(--warn-soft);color:var(--warn);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.pgroup>summary .sel{font-size:12px;font-weight:700;background:var(--maroon);color:var(--maroon-ink);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.pgroup .pbody{padding:0 14px 6px;background:var(--surface)}
 .event{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:8px 14px;padding:10px 0;border-top:1px solid var(--line)}
 .event .en{font-weight:700;min-width:0}
 .event .en small{display:block;font-weight:400;color:var(--muted);font-size:13px}
@@ -175,7 +187,34 @@ td.num,th.num{text-align:right;white-space:nowrap}
 .contact a{color:var(--maroon);font-weight:700;text-decoration:none;font-variant-numeric:tabular-nums;margin-top:4px;width:max-content}
 @media (prefers-color-scheme:dark){.contact a{color:var(--gold)}}
 footer{padding-block:0 110px;font-size:13px;color:var(--muted);text-align:center}
-@media (max-width:620px){.event{grid-template-columns:1fr}.chip{flex:1 1 120px}.bank{grid-template-columns:1fr}.qr{justify-self:center}}
+@media (max-width:620px){
+  section.block{padding:14px;gap:12px}
+  h2{font-size:17px}
+  .event{grid-template-columns:1fr;gap:6px;padding:10px 0}
+  .event .en{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px}
+  .event .en small{display:inline}
+  .chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .chip{min-width:0;padding:7px 8px;text-align:center;min-height:48px}
+  .chip .amt{font-size:15px}
+  .bank{grid-template-columns:1fr;padding:12px}
+  .bank dl{grid-template-columns:1fr;gap:0}
+  .bank dt{padding-top:8px;font-size:12px}
+  .bank dt:first-child{padding-top:0}
+  .bank dd{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:8px;border-bottom:1px dashed var(--line);font-size:16px}
+  .bank dd:last-of-type{border-bottom:0}
+  .bank dd span{overflow-wrap:anywhere;min-width:0}
+  .copy{flex:none;font-size:13px;padding:6px 12px;margin-left:0}
+  .qr{justify-self:center}
+  .qr .btn{width:100%;padding:12px;font-size:16px}
+  .choice label{padding:12px}
+  .checks label{font-size:14.5px}
+  .bar .wrap{flex-wrap:nowrap;gap:10px}
+  .bar .row{flex-wrap:nowrap}
+  #formErr{position:absolute;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:100%;background:var(--surface);border:1px solid var(--err);border-radius:8px;padding:6px 10px;margin-bottom:6px}
+  #formErr:empty{display:none}
+  .bar{position:fixed}
+  .contact a{font-size:17px;padding:4px 0}
+}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style>
 </head>
@@ -481,15 +520,22 @@ document.querySelectorAll('input[name=type]').forEach(r=>r.addEventListener('cha
   $('prizeBox').hidden=state.type!=='prize';$('supportBox').hidden=state.type!=='support';updateBar();}));
 
 /* ---------- पुरस्कार चयन (केवल रिक्त) ---------- */
-function renderPicker(){let html='',lastG='';
+const openGroups=new Set([G1]);
+function renderPicker(){let html='';
   [...state.selected].forEach(id=>{if(state.taken[id])state.selected.delete(id)});
-  EVENTS.forEach(e=>{const slots=SLOTS.filter(s=>s.ev===e&&!state.taken[s.id]);if(!slots.length)return;
-    if(e.g!==lastG){html+=`<div class="group-h">${e.g}</div>`;lastG=e.g}
-    html+=`<div class="event"><div class="en">${e.n}<small>${e.t}</small></div><div class="chips">`+
-      slots.map(s=>`<button type="button" class="chip" data-slot="${s.id}" aria-pressed="${state.selected.has(s.id)}"><span class="pl">${s.place}</span><span class="amt">${rs(s.amt)}</span></button>`).join('')+`</div></div>`});
+  [G1,G2,G3].forEach(g=>{let body='',open=0,sel=0;
+    EVENTS.filter(e=>e.g===g).forEach(e=>{const slots=SLOTS.filter(s=>s.ev===e&&!state.taken[s.id]);if(!slots.length)return;open+=slots.length;
+      sel+=slots.filter(s=>state.selected.has(s.id)).length;
+      body+=`<div class="event"><div class="en">${e.n}<small>${e.t}</small></div><div class="chips">`+
+        slots.map(s=>`<button type="button" class="chip" data-slot="${s.id}" aria-pressed="${state.selected.has(s.id)}"><span class="pl">${s.place}</span><span class="amt">${rs(s.amt)}</span></button>`).join('')+`</div></div>`});
+    if(!open)return;
+    html+=`<details class="pgroup" data-g="${g}"${openGroups.has(g)?' open':''}><summary><span>${g}</span>${sel?`<span class="sel">${sel} चयनित</span>`:''}<span class="cnt">${open} रिक्त</span></summary><div class="pbody">${body}</div></details>`});
   $('picker').innerHTML=html||'<p class="note">सभी पुरस्कार स्थानों पर सहयोगी मिल चुके हैं। आप “कार्यक्रम हेतु सहयोग” चुनकर योगदान दे सकते हैं।</p>';updateBar();}
+$('picker').addEventListener('toggle',e=>{const d=e.target;if(!d.dataset||!d.dataset.g)return;d.open?openGroups.add(d.dataset.g):openGroups.delete(d.dataset.g)},true);
 $('picker').addEventListener('click',e=>{const b=e.target.closest('[data-slot]');if(!b)return;const id=b.dataset.slot;
-  state.selected.has(id)?state.selected.delete(id):state.selected.add(id);b.setAttribute('aria-pressed',state.selected.has(id));updateBar();renderMemo();});
+  state.selected.has(id)?state.selected.delete(id):state.selected.add(id);b.setAttribute('aria-pressed',state.selected.has(id));updateBar();renderMemo();
+  const d=b.closest('details');if(d){const n=d.querySelectorAll('.chip[aria-pressed="true"]').length;let s=d.querySelector('summary .sel');
+    if(n){if(!s){s=document.createElement('span');s.className='sel';d.querySelector('summary .cnt').before(s)}s.textContent=n+' चयनित'}else if(s)s.remove()}});
 
 /* ---------- कार्यक्रम सहयोग राशि ---------- */
 $('fAmount').addEventListener('input',updateBar);
@@ -556,7 +602,7 @@ function renderMemo(){const m=$('memo');const p=state.person;if(!p){m.hidden=tru
   let h=`<div class="title">जय जोहार! आप ${p.y.length} आयोजनों में पुरस्कार सहयोग कर चुके हैं। आपका पुनः स्वागत है।</div><div style="overflow-x:auto">${dots(p)}</div>`;
   if(avail.length)h+=`<div>पिछले वर्ष आपने जो पुरस्कार दिया था, वह इस वर्ष भी रिक्त है: <b>${avail.map(id=>`${SLOT[id].ev.n} ${SLOT[id].place} ${rs(SLOT[id].amt)}`).join('; ')}</b></div><div><button type="button" class="btn small primary" id="repeatBtn">यही पुरस्कार इस वर्ष भी चुनें</button></div>`;
   m.innerHTML=h;m.hidden=false;
-  const rb=$('repeatBtn');if(rb)rb.onclick=()=>{$('tPrize').checked=true;$('tPrize').dispatchEvent(new Event('change'));avail.forEach(id=>state.selected.add(id));renderPicker();renderMemo();
+  const rb=$('repeatBtn');if(rb)rb.onclick=()=>{$('tPrize').checked=true;$('tPrize').dispatchEvent(new Event('change'));avail.forEach(id=>{state.selected.add(id);openGroups.add(SLOT[id].ev.g)});renderPicker();renderMemo();
     document.querySelector('[data-slot="'+avail[0]+'"]')?.scrollIntoView({block:'center',behavior:'smooth'})}}
 
 /* ---------- पुरस्कार स्थिति तालिका ---------- */
